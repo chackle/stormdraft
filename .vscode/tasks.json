@@ -1,0 +1,52 @@
+{
+    "version": "0.1.0",
+    "command": "gulp",
+    "isShellCommand": true,
+    "args": [
+        "--no-color"
+    ],
+    "tasks": [
+        {
+            "taskName": "compile-ts",
+            "args": [],
+            "showOutput": "never",
+            "isBuildCommand": true,
+            "problemMatcher": [
+                "$tsc"
+            ]
+        },
+        {
+            "taskName": "ts-lint",
+            "args": [],
+            "showOutput": "never",
+            "isBuildCommand": true,
+            "problemMatcher": [
+                {
+                    "severity": "warning",
+                    "owner": "gulp",
+                    "fileLocation": ["relative", "${workspaceRoot}/app/"],
+                    "pattern": {
+                        "regexp": "^\\[\\d{2}\\:\\d{2}\\:\\d{2}\\] \\[\\S*\\] (error|warning) (.*)\\[(\\d+), (\\d+)\\]:(.*)$",
+                        "file": 2,
+                        "line": 3,
+                        "column": 4,                    
+                        "message": 5
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+
+//[14:44:25] [gulp-tslint] error app.module.ts[4, 19]: trailing whitespace
+
+
+
+// capture numbers 
+// ^\[(\d{2})\:(\d{2})\:(\d{2})\]
+
+
+// capture lint errors
+
+//^\[\d{2}\:\d{2}\:\d{2}\] \[\S*\] (error|warning) (.*)\[(\d+), (\d+)\]:(.*)$

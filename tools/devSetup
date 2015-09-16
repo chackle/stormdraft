@@ -1,0 +1,4 @@
+npm install bower -g
+npm install typescript@1.4.x -g
+npm install tsd@next -g
+npm install http-server@x -g
