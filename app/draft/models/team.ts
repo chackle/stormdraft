@@ -2,22 +2,22 @@ module app.draft {
 	
 	export class Team {
 		
-		characters: Array<Character>;
+		heroes: Array<Hero>;
 		
 		constructor() {
-			this.characters = new Array<Character>();
+			this.heroes = new Array<Hero>();
 		}
 		
-		addCharacter(character: Character) {
-			this.characters.push(character);
+		addHero(hero: Hero) {
+			this.heroes.push(hero);
 		}
 		
-		removeCharacter(character: Character) {
-			var index = this.characters.indexOf(character, 0);
+		removeHero(hero: Hero) {
+			var index = this.heroes.indexOf(hero, 0);
 			if (index !== undefined) {
-				console.log("Removing '" + character.name + "'.");
-   			this.characters.splice(index, 1);
-				 console.log("Removed character. New Roster: " + JSON.stringify(this.characters));
+				console.log("Removing '" + hero.name + "'.");
+   			this.heroes.splice(index, 1);
+				 console.log("Removed hero. New Roster: " + JSON.stringify(this.heroes));
 			} else {
 				console.log("Character not found. Cannot remove!");
 			}

@@ -6,9 +6,9 @@ module app.draft {
 			// Construct
 		}
 		
-		recommendHero(blueTeam: Team, redTeam: Team): Character {
+		recommendHero(blueTeam: Team, redTeam: Team): Hero {
 			// recommend a hero
-			return new Character(CharacterName.Abathur, Role.Specialist);
+			return new Hero(HeroName.Abathur, Role.Specialist);
 		}
 	}
 }

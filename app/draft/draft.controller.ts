@@ -14,8 +14,8 @@ module app.draft {
 		
 		test() {
 			this.draftManager.buildDummyTeams();
-			var recommendedCharacter = this.draftService.recommendHero(this.draftManager.blueTeam, this.draftManager.redTeam);
-			this.draftManager.blueTeam.removeCharacter(recommendedCharacter);
+			var recommendedHero = this.draftService.recommendHero(this.draftManager.blueTeam, this.draftManager.redTeam);
+			this.draftManager.blueTeam.removeHero(recommendedHero);
 		}
 	}
 }

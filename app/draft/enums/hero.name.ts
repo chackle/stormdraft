@@ -1,6 +1,6 @@
 module app.draft {
 
-	export class CharacterName {
+	export class HeroName {
 		static Abathur = "Abathur";
 		static Anubarak = "Anub'arak";
 		static Arthas = "Arthas";
