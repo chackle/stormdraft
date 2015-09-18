@@ -1,25 +1,17 @@
 module app.draft {
 	
 	export class DraftController {
-		static $inject: Array<string> = ['$state', '$rootScope', '$q', 'HeroService'];
+		static $inject: Array<string> = ['$state', '$rootScope', '$q', 'HeroService', 'DraftService'];
 		
-		draftService: DraftService;
-		draftManager: DraftManager;
-		heroManager: HeroManager;
-		
-		constructor(private $state: any, private $rootScope: any, private $q: any, private heroService: HeroService) {
-			this.draftService = new DraftService();
-			this.draftManager = new DraftManager();
-			this.heroManager = new HeroManager(heroService, $q);
+		constructor(private $state: any, private $rootScope: any, private $q: any, private heroService: HeroService, private draftService: DraftService) {
 			this.getAllHeroes();
-			this.test();
 		}
 		
 		getAllHeroes() {
-			this.heroManager.getAllHeroes()
+			this.heroService.getAllHeroes()
 			.then(
 				(result: Array<Hero>) => {
-					console.log("Parsed Character Data: " + JSON.stringify(result));
+					this.draftService.roster = result;
 				},
 				(error: any) => {
 					console.log("error: " + JSON.stringify(error));
@@ -27,10 +19,23 @@ module app.draft {
 			);
 		}
 		
-		test() {
-			this.draftManager.buildDummyTeams();
-			var recommendedHero = this.draftService.recommendHero(this.draftManager.blueTeam, this.draftManager.redTeam);
-			this.draftManager.blueTeam.removeHero(recommendedHero);
+		addHeroToBlueTeam(hero: Hero) {
+			this.draftService.blueTeam.addHero(hero);
+			console.log(this.draftService.recommendHeroes());
+		}
+		
+		addHeroToRedTeam(hero: Hero) {
+			this.draftService.redTeam.addHero(hero);
+			console.log(this.draftService.recommendHeroes());
+		}
+		
+		unselectHero(hero: Hero) {
+			this.draftService.unselectHero(hero);
+			console.log(this.draftService.recommendHeroes());
+		}
+		
+		heroIsPicked(hero: Hero): boolean {
+			return this.draftService.isHeroPicked(hero);
 		}
 	}
 }

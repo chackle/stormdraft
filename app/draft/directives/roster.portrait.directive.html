@@ -1,0 +1,7 @@
+<div class="roster-portrait-background">
+	<div class="roster-portrait" ng-if="hero && !vm.heroIsPicked(hero)">
+		<p>{{hero.name}}</p>
+		<button type="button" class="btn btn-default btn-sm" ng-click="vm.addHeroToBlueTeam(hero)">Blue</button>
+		<button type="button" class="btn btn-default btn-sm" ng-click="vm.addHeroToRedTeam(hero)">Red</button>
+	</div>
+</div>

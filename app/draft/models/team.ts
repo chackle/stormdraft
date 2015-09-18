@@ -9,17 +9,18 @@ module app.draft {
 		}
 		
 		addHero(hero: Hero) {
+			if (this.heroes.length < 5) {
 			this.heroes.push(hero);
+			}
 		}
 		
 		removeHero(hero: Hero) {
-			var index = this.heroes.indexOf(hero, 0);
-			if (index !== undefined) {
-				console.log("Removing '" + hero.name + "'.");
-   			this.heroes.splice(index, 1);
-				 console.log("Removed hero. New Roster: " + JSON.stringify(this.heroes));
-			} else {
-				console.log("Character not found. Cannot remove!");
+			for (var i = 0; i < this.heroes.length; i++) {
+				var teamHero = this.heroes[i];
+				if (teamHero.name === hero.name) {
+					this.heroes.splice(i, 1);
+					return;
+				}
 			}
 		}
 	}

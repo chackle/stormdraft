@@ -8,6 +8,7 @@ module app {
     'app.draft',
     'app.changelog',
     'app.about',
-    'ui.router'
+    'ui.router',
+    'ngDragDrop'
   ]);
 }
