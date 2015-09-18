@@ -16,7 +16,7 @@ module app.draft {
 		}
 		
 		buildDummyTeams() {
-			this.blueTeam.addHero(new Hero(HeroName.Abathur, Role.Specialist));
+			this.blueTeam.addHero(new Hero("abathur"));
 			console.log("Blue Team: " + JSON.stringify(this.blueTeam));
 		}
 	}

@@ -2,8 +2,13 @@ module app.draft {
 	
 	export class Hero {
 		
-		constructor(public name: HeroName, public role: Role) {
+		withStatistics: Array<HeroStatistic>;
+		againstStatistics: Array<HeroStatistic>;
+		
+		constructor(public name: string) {
 			// Construct
+			this.withStatistics = new Array<HeroStatistic>();
+			this.againstStatistics = new Array<HeroStatistic>();
 		}
 	}
 }

@@ -8,7 +8,7 @@ module app.draft {
 		
 		recommendHero(blueTeam: Team, redTeam: Team): Hero {
 			// recommend a hero
-			return new Hero(HeroName.Abathur, Role.Specialist);
+			return new Hero("abathur");
 		}
 	}
 }
