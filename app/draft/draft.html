@@ -9,9 +9,9 @@
 	<div>
 	<div>
 		<div class="recommended-hero-panel">
-			<div class="recommended-hero">
-			</div>
-			<div class="recommended-hero">
+			<div class="recommended-hero" ng-repeat="hero in vm.draftService.recommendedHeroes" hero="hero">
+				<p>{{hero.name}}</p>
+				<p>{{hero.winRate}}% win rate</p>
 			</div>
 		</div>
 	</div>

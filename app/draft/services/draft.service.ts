@@ -5,11 +5,13 @@ module app.draft {
 		blueTeam: Team;
 		redTeam: Team;
 		roster: Array<Hero>;
+		recommendedHeroes: Array<HeroStatistic>;
 		
 		constructor() {
 			this.blueTeam = new Team();
 			this.redTeam = new Team();
 			this.roster = new Array<Hero>();
+			this.recommendedHeroes = new Array<HeroStatistic>();
 		}
 		
 		clearTeams() {
@@ -39,48 +41,74 @@ module app.draft {
 		}
 		
 		recommendHeroes(): Array<HeroStatistic> {
-			var heroWithRatesMap = {};
+			if (this.blueTeam.heroes.length === 5 || 
+					(this.blueTeam.heroes.length === 0 && 
+					 this.redTeam.heroes.length === 0)) {
+				while (this.recommendedHeroes.length > 0) {
+					this.recommendedHeroes.pop();
+				}
+				return;
+			}
+			var heroRatesMap = {};
+			
+			// Appending 'with' rates to map
 			for (var i = 0; i < this.blueTeam.heroes.length; i++) {
 				var blueHeroStatistics = this.blueTeam.heroes[i].withStatistics;
 				for (var y = 0; y < blueHeroStatistics.length; y++) {
 					var blueHeroStatistic = blueHeroStatistics[y];
-					if (heroWithRatesMap[blueHeroStatistic.name] == null) {
-						heroWithRatesMap[blueHeroStatistic.name] = blueHeroStatistic.winRate;
+					if (heroRatesMap[blueHeroStatistic.name] == null) {
+						heroRatesMap[blueHeroStatistic.name] = blueHeroStatistic.winRate;
 					} else {
-						heroWithRatesMap[blueHeroStatistic.name] += blueHeroStatistic.winRate;
+						heroRatesMap[blueHeroStatistic.name] += blueHeroStatistic.winRate;
 					}
 				}
 			}
 			
-			console.log(heroWithRatesMap);
+			// Appending 'against' rates to map
+			for (var i = 0; i < this.redTeam.heroes.length; i++) {
+				var redHeroStatistics = this.redTeam.heroes[i].againstStatistics;
+				for (var y = 0; y < redHeroStatistics.length; y++) {
+					var redHeroStatistic = redHeroStatistics[y];
+					if (heroRatesMap[redHeroStatistic.name] == null) {
+						heroRatesMap[redHeroStatistic.name] = redHeroStatistic.winRate;
+					} else {
+						heroRatesMap[redHeroStatistic.name] += redHeroStatistic.winRate;
+					}
+				}
+			}
 			
-			var bestWithHeroes = Array<HeroStatistic>();
-			for (var property in heroWithRatesMap) {
-				if (heroWithRatesMap.hasOwnProperty(property)) {
-					var firstHero = bestWithHeroes[0];
-					var newHero = new HeroStatistic(property, heroWithRatesMap[property]);
-					if (bestWithHeroes.length === 0) {
-						bestWithHeroes.push(newHero);
+			console.log(heroRatesMap);
+			
+			var bestHeroes = Array<HeroStatistic>();
+			for (var property in heroRatesMap) {
+				if (heroRatesMap.hasOwnProperty(property)) {
+					var firstHero = bestHeroes[0];
+					var newHero = new HeroStatistic(property, heroRatesMap[property]);
+					if (bestHeroes.length === 0) {
+						bestHeroes.push(newHero);
 					} else {
 						if (newHero.winRate > firstHero.winRate) {
-							while (bestWithHeroes.length > 0) {
-								bestWithHeroes.pop();
+							while (bestHeroes.length > 0) {
+								bestHeroes.pop();
 							}
-							bestWithHeroes.push(newHero);
+							bestHeroes.push(newHero);
 						} else if (newHero.winRate === firstHero.winRate) {
-							bestWithHeroes.push(newHero);
+							bestHeroes.push(newHero);
 						}
 					}
 				}
 			}
 			
-			if (bestWithHeroes.length > 0) {
-				for (var i = 0; i < bestWithHeroes.length; i++) {
-					var hero = bestWithHeroes[i];
-					var averageWithWinPercent = heroWithRatesMap[hero.name] / this.blueTeam.heroes.length-1;
+			var recommendedHeroes = new Array<HeroStatistic>();
+			if (bestHeroes.length > 0) {
+				for (var i = 0; i < bestHeroes.length; i++) {
+					var hero = bestHeroes[i];
+					var divideAmount = this.blueTeam.heroes.length + this.redTeam.heroes.length;
+					var averageWithWinPercent = heroRatesMap[hero.name] / divideAmount;
 					console.log("(" + hero.name + ") Average Win Percent: " + averageWithWinPercent);
+					recommendedHeroes.push(new HeroStatistic(hero.name, +averageWithWinPercent.toFixed(2)));
 				}
-				return bestWithHeroes;
+				this.recommendedHeroes = recommendedHeroes;
 			}
 		}
 	}
